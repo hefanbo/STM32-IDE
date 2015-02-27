@@ -1,0 +1,148 @@
+= A Guide to Setup Development Environment for STM32F0 Microcontrollers
+:author: Fanbo He
+:email: hefanbo@gmail.com
+:revdate: 2015/02/27
+:keywords: ARM, Cortex M0, STM32, STM32F0, IDE, Eclipse
+:toc: preamble
+
+{author} <{email}>
+
+{revdate}
+
+[abstract]
+== Abstract
+This article describes how to setup a development environment for http://www.st.com/web/en/catalog/mmc/FM141/SC1169/SS1574[STM32F0] series microcontrollers (http://www.arm.com/products/processors/cortex-m/cortex-m0.php[ARM Cortex M0]) manufactured by http://www.st.com[STMicroelectronics]. Although there are some good commercial solutions such as https://www.iar.com/iar-embedded-workbench/[IAR Embedded Workbench], http://www.keil.com/arm/mdk.asp[MDK-ARM] and http://atollic.com/index.php/truestudio[TrueSTUDIO], this article tries to use free and http://www.wikipedia.org/wiki/Open_source[open source] software as much as possible to provide a low-cost high-quality solution.
+
+*Keywords:* {keywords}
+
+:numbered:
+== Overview
+=== System and hardware environment
+The system and hardware environment used in this article is described as follows. It is *not* system requirements. For detailed system requirements, please refer to documents of software packages.
+
+Windows 7 (64-bit)::
+The host operating system must be Windows because STM32CubeMX runs only on Windows. Nevertheless, if you don't plan to use STM32CubeMX, other operating systems are feasible.
+
+Java Runtime Environment 8::
+Java Runtime Environment (JRE, version≥7) is required by STM32CubeMX and Eclipse. Download links can be found at https://www.java.com/en/download/manual.jsp.
+
+Hardware of host PC::
+CPU: 3.4 GHz / 4 Cores. RAM: 8 GB. Disk space used by all software packages is nearly 1 GB.
+
+Development board::
+The development board in this article is http://www.st.com/web/en/catalog/tools/PF260944[NUCLEO-F091RC] which features the microcontroller http://www.st.com/web/catalog/mmc/FM141/SC1169/SS1574/LN7/PF260450[STM32F091RCT6] and includes an on-board http://www.st.com/web/catalog/tools/FM146/CL1984/SC724/SS1677/PF251168[ST-LINK/V2] programmer.
+
+
+=== List of software packages to be installed
+STM32 ST-LINK utility::
+This software includes drivers and utilities for the ST-LINK programmer.
+
+STM32CubeMX::
+This handy tool lets users configure microcontrollers by GUI, and generates appropriate initialization code.
+
+STM32CubeF0::
+This package provides useful code, libraries, and examples for users to write applications for STM32F0.
+
+GNU Tools for ARM Embedded Processor::
+This is an open source toolchain to build programs for ARM processors.
+
+GNU ARM Eclipse build tools::
+This open source package includes some useful programs such as *make* and *rm* which are needed during compiling.
+
+OpenOCD::
+This open source software links gdb(the debug program) with microcontrollers. Although there is another open source project https://github.com/texane/stlink[*stlink*] which provides similar functions, this article prefers OpenOCD because it is more general and is easier to use with *GNU ARM Eclipse Plug-in*.
+
+Eclipse::
+http://www.eclipse.org[Eclipse] is an open source platform which is the base of many embedded software development http://www.wikipedia.org/wiki/Integrated_development_environment[IDEs] such as http://atollic.com/index.php/truestudio[TrueSTUDIO], http://www.coocox.org/software/coide.php[CooCox CoIDE], and http://www.ti.com/tool/ccstudio[Code Composer Studio].
+
+CDT Eclipse Plug-in::
+This open source Eclipse plugin provides a $$C/C++$$ development environment.
+
+GNU ARM Eclipse Plug-in::
+This open source Eclipse plugin provides a $$C/C++$$ development environment for ARM processors.
+
+
+== Software installation
+=== Drivers and utilities provided by STMicroelectronics
+. Download *STM32 ST-LINK utility* from http://www.st.com/web/en/catalog/tools/PF258168. Unpack and run the installer. Since this package includes drivers for ST-LINK programmers, there is no need to download and install drivers separately. After installation, connect the board to your PC via a USB cable. The LED LD1 is expected to be red (not blinking) now. Launch the *STM32 ST-LINK Utility* via the desktop shortcut, and select *Target->Connect* from the menu. After a few seconds, the software should show the memory contents of the chip, and LD1 is expected to blink fast in red and green. Finally, selecting *Target->Disconnect* makes LD1 green (not blinking). In case something goes wrong, more information and downloads can be found at http://www.st.com/web/en/catalog/tools/PF251168.
+
+. Download *STM32CubeMX* from http://www.st.com/web/en/catalog/tools/PF259242. Unpack and run the installer.
+
+. [[STM32CubeF0]]Downdoad *STM32CubeF0* and its *patch* from http://www.st.com/web/en/catalog/tools/PF260612 and http://www.st.com/web/en/catalog/tools/PF261699, respectively. To install these packages, launch *STM32CubeMX*, and select *Help->Updater Settings* to set *Repository Folders* where the files will be extracted to. Then select *Help->Install New Libraries*, click *From Loc...* button, and browse to the zip files downloaded.
+
+
+=== Build toolchain and utilities for ARM
+. [[toolchain]]Download *GNU Tools for ARM Embedded Processor* from https://launchpad.net/gcc-arm-embedded/+download. Unpack and run the installer.
+. [[bintools]]Download *GNU ARM Eclipse build tools* from http://sourceforge.net/projects/gnuarmeclipse/files/Build%20Tools/. Unpack and run the installer.
+. Download *OpenOCD 0.9.0-dev* from http://www.freddiechopin.info/download/category/10-openocd-dev/. Extract the downloaded zip file. The OpenOCD project page is http://sourceforge.net/projects/openocd/. However, the latest release 0.8.0 does not work with STM32F091RCT6, and therefore users have to compile the latest source code available at http://sourceforge.net/p/openocd/code/ci/master/tree/. Fortunately, this nice guy http://www.freddiechopin.info/en/about[Freddie Chopin] has done the compilation and provides downloads as above.
+
+
+=== Eclipse and plugins
+. Download *Eclipse IDE for $$C/C++$$ Developers* from http://www.eclipse.org/downloads/. Extract the zip file. If your computer has internet connection, you can follow "the recommended way" on http://gnuarmeclipse.livius.net/blog/plugins-install/#The_recommended_way. If you prefer off-line install, please follow the next 2 steps.
+. Download *CDT 8.5.0* from https://www.eclipse.org/cdt/downloads.php. Launch Eclipse, select *Help->Install New Software...*, click *Add...* then *Archive...*, and browse to the downloaded zip file. Check the *$$C/C++$$ GDB Hardware Debugging* component and install. Remember to uncheck "Contact all update sites during install to find required software" if there is no internet connection.
+. Download *GNU ARM Eclipse Plug-in* from http://sourceforge.net/projects/gnuarmeclipse/. Similar as above, install *GNU ARM $$C/C++$$ Cross Compiler* and *GNU ARM $$C/C++$$ OpenOCD Debugging* components from the downloaded package.
+
+
+=== A quick note for Linux
+Although this article is mainly based on Windows, here are the steps to setup a basic development environment (without STM32CubeMX) for STM32 on Linux.
+
+. Install GNU ARM toolchain
+. Install Eclipse with CDT and GNU ARM Eclipse plugins
+. Compile and Install OpenOCD
+
+
+== Example projects
+This example shows steps to generate initialization code with STM32CubeMX, create an Eclipse project, and compile/load/debug a program.
+
+
+=== Generate initialization code
+. [Generate code] Launch STM32CubeMX, click *New Project* and select *Board Selector* tab, choose *NUCLEO-F091RC* and click *OK*. Select *Project->Settings...* from the menu. Fill *Project Location* (refered as *workspace* hereafter) and *Project Name*, and select *TrueSTUDIO* for IDE. Now switch to *Code Generator* tab and select *Copy only the necessary library files*, and then click *OK*. Then select *Project->Generate Code* from the menu and a folder (refered as *working folder* hereafter) will be generated with initialization code inside.
+. [Delete unnecessary project configuration] In the working folder, TrueSTUDIO can be deleted.
+. [Delete unnecessary header files] Delete the following files (21 in total)
+.. In *Drivers\CMSIS\Device\ST\STM32F0xx\Include*, delete everything except *stm32f0xx.h*, *stm32f091xc.h*, and *system_stm32f0xx.h*.
+.. In *Drivers\CMSIS\Include*, delete *core_cm0plus.h*, *core_cm3.h*, *core_cm4.h*, *core_cm7.h*, *core_sc000.h*, and *core_sc300.h*.
+. [Copy BSP files] The package STM32CubeF0 provides some BSP(board support package) files which are not copied to the working folder by STM32CubeMX. Copy them manually to make coding easier -- create a folder named *BSP* in the working folder, and copy *Drivers\BSP\STM32F0xx-Nucleo* in the STM32CubeF0 repository (specified when installing <<STM32CubeF0,STM32CubeF0>>) into *BSP* in the working folder.
+. [Copy linker script] STM32CubeMX doesn't generate the linker script correctly, so we have to do it manually. In the STM32CubeF0 repository, locate *Projects\STM32F091RC-Nucleo\Templates\TrueSTUDIO\STM32F091RC-Nucleo*, and copy *STM32F091RC_FLASH.ld* into *Src* in the working folder.
+. [Fix assembly file extension] Locate the folder *Drivers\CMSIS\Device\ST\STM32F0xx\Source\Templates\gcc*, and rename *startup_stm32f091xc.s* to *startup_stm32f091xc.S* (Upper-case 'S'). Otherwise the compiler will give a warning "cannot find entry symbol Reset_Handler".
+
+
+=== Create Eclipse project
+. [Set workspace] Launch Eclipse, select the forementioned *workspace* folder when asked for *Workspace*. In case another workspace is opened by default, select *File->Switch Workspace->Other...* to switch workspace.
+. [Create project] Select *File->New->C Project* from the menu, choose *Empty Project* and *Cross ARM GCC*. Uncheck *Use default location*, and fill *Location* with "*<working folder>\EclipseProject*". Fill *Project name* with the same *Project Name* in STM32CubeMX. Click *Next* button, uncheck *release*, and click *Next* again. In the *toolchain path*, browse to the *bin* folder of the installed <<toolchain,*GNU Tools for ARM Embedded Processor*>>, and click *Finish*.
+. [Add source folders] Select *File->New->Folder* from the menu, click *Advanced*, select *Link to alternat location (Linked Folder)*, enter *"..\Src"* (without quotes) and click *Finish*. Add *..\Inc* and *..\Drivers* in the same way.
+. [Add path for tools] Select *Project->Properties* from the menu, select *$$C/C++$$ Build->Environment* from the left tree, and double click *PATH* in the right pane. Append the full path of the *bin* folder of <<bintools,*GNU ARM Eclipse build tools*>> after the original value. Don't forget to add a semicolon as a separation.
+. [Set build options] Select *Project->Properties* from the menu. Select *$$C/C++$$ Build->Settings* from the left tree.
+.. Select *Target Processor* on the right pane. Choose *cortex-m0* for *ARM family*.
+.. Select *Cross ARM C Compiler->Preprocessor*. Click *Add* icon on the *Defined symbols (-D)* pane, and enter *"STM32F091xC"* (without quotes). Do it again to add *"USE_HAL_DRIVER"*.
+.. Select *Cross ARM C Compiler->Include*. Click *Add* icon on the *Include paths (-I)* pane, click *Workspace...*, and browse to the *Inc* folder in the project. Do the same thing for *Drivers/STM32F0xx_HAL_Driver/Inc*, *Drivers/CMSIS/Include*, *Drivers/CMSIS/Device/ST/STM32F0xx/Include*, and *Drivers/BSP/STM32F0xx-Nucleo*.
+.. Select *Cross ARM C Linker->General*. Click *Add* icon on the *Script files (-T)* pane, click *Workspace...*, and browse to *STM32F091RC_FLASH.ld* in the *Src* folder.
+.. Select *Cross ARM GNU Create Flash Image->General*. Specify *Raw binary* for *Output file format (-O)*. Although the default *Intel HEX* also works with *STM32 ST-LINK Utility*, the http://developer.mbed.org/handbook/mbed-interface[mbed interface] only supports binary files.
+. [Add custom code] Open *main.c* in *Src*. The function of the program is simple -- light the green LED LD2 when the blue button B1 is pressed.
+.. Add `#include "stm32f0xx_nucleo.h"` between `$$/* USER CODE BEGIN Includes */$$` and `$$/* USER CODE END Includes */$$`.
+.. Add the following code inside the `while (1)` loop
+
+[source,c,indent=4]
+----
+if (BSP_PB_GetState(BUTTON_USER)) {
+  BSP_LED_Off(LED_GREEN);
+} else {
+  BSP_LED_On(LED_GREEN);
+}
+----
+
+NOTE: If there are unexpected error marks in the source code, try *Project->$$C/C++$$ Index->Rebuild* from the menu.
+
+
+=== Compile and run
+. [Compile] Select *Project->Build Project* from the menu of Eclipse, and a *bin* file will be generated in the *EclipseProject\Debug* folder.
+. [Flash] There are two ways to flash bin files to the board. After flashing, the program should run as expected.
+.. Launch STM32 ST-LINK utility, select *Target->Program & Verify...*, browse to the bin file, and click *Start*.
+.. When the board is connected to the host PC, a USB drive will appear. Just copy the bin file to the drive, and the on-board http://developer.mbed.org/handbook/mbed-interface[mbed interface] will flash it automatically.
+. [Debug] Follow these steps to debug with Eclipse
+.. [Set OpenOCD path] Select *Window->Preferences* from the menu, and then select *Run/Debug->String Substitution* from the left tree. Set the absolute path (e.g., `...\OpenOCD\bin-x64`) and executable file name (e.g., `openocd-x64-0.9.0-dev-150204220259`) in the right pane.
+.. [Create debug configuration] Select *Run->Debug Configurations...* from the menu, and double click *GDB OpenOCD Debugging* in the left tree. In the right pane, select *Debugger* tab, and fill *-f boards/st_nucleo_f0.cfg* in *Config options*.
+.. [Launch debug] Connect the board with a USB cable, and click *Debug* button. Switch to "Debug" perspective if asked. Now you can debug the program by setting breakpoints, executing program step by step, watching variables, etc.
+
+
+'''
+image:https://licensebuttons.net/l/by/4.0/88x31.png["CC BY 4.0", link=http://creativecommons.org/licenses/by/4.0/] Licensed under http://creativecommons.org/licenses/by/4.0/[Creative Commons Attribution 4.0 International license]
