@@ -118,7 +118,7 @@ This example shows steps to generate initialization code with STM32CubeMX, creat
 .. Select *Cross ARM C Linker->General*. Click *Add* icon on the *Script files (-T)* pane, click *Workspace...*, and browse to *STM32F091RC_FLASH.ld* in the *Src* folder.
 .. Select *Cross ARM GNU Create Flash Image->General*. Specify *Raw binary* for *Output file format (-O)*. Although the default *Intel HEX* also works with *STM32 ST-LINK Utility*, the http://developer.mbed.org/handbook/mbed-interface[mbed interface] only supports binary files.
 . [Add custom code] Open *main.c* in *Src*. The function of the program is simple -- light the green LED LD2 when the blue button B1 is pressed.
-.. Add `#include "stm32f0xx_nucleo.h"` between `$$/* USER CODE BEGIN Includes */$$` and `$$/* USER CODE END Includes */$$`.
+.. Add `#include "stm32f0xx_nucleo.h"` between `pass:[/* USER CODE BEGIN Includes */]` and `pass:[/* USER CODE END Includes */]`.
 .. Add the following code inside the `while (1)` loop
 
 [source,c,indent=4]
