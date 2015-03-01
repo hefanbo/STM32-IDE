@@ -49,10 +49,10 @@ GNU Tools for ARM Embedded Processor::
 This is an open source toolchain to build programs for ARM processors.
 
 GNU ARM Eclipse build tools::
-This open source package includes some useful programs such as *make* and *rm* which are needed during compiling.
+This open source package includes some useful programs such as *make* and *rm* which are needed during building.
 
 OpenOCD::
-This open source software links gdb(the debug program) with microcontrollers. Although there is another open source project https://github.com/texane/stlink[*stlink*] which provides similar functions, this article prefers OpenOCD because it is more general and is easier to use with *GNU ARM Eclipse Plug-in*.
+This open source software links gdb(the debug program) with microcontrollers. Although there is another open source project https://github.com/texane/stlink[*stlink*] which provides similar functions, this article prefers OpenOCD because it is more general and is easier to use with <<gnuarmeclipse,*GNU ARM Eclipse Plug-in*>>.
 
 Eclipse::
 http://www.eclipse.org[Eclipse] is an open source platform which is the base of many embedded software development http://www.wikipedia.org/wiki/Integrated_development_environment[IDEs] such as http://atollic.com/index.php/truestudio[TrueSTUDIO], http://www.coocox.org/software/coide.php[CooCox CoIDE], and http://www.ti.com/tool/ccstudio[Code Composer Studio].
@@ -60,7 +60,7 @@ http://www.eclipse.org[Eclipse] is an open source platform which is the base of 
 CDT Eclipse Plug-in::
 This open source Eclipse plugin provides a $$C/C++$$ development environment.
 
-GNU ARM Eclipse Plug-in::
+[[gnuarmeclipse]]GNU ARM Eclipse Plug-in::
 This open source Eclipse plugin provides a $$C/C++$$ development environment for ARM processors.
 
 
@@ -70,7 +70,7 @@ This open source Eclipse plugin provides a $$C/C++$$ development environment for
 
 . Download *STM32CubeMX* from http://www.st.com/web/en/catalog/tools/PF259242. Unpack and run the installer.
 
-. [[STM32CubeF0]]Downdoad *STM32CubeF0* and its *patch* from http://www.st.com/web/en/catalog/tools/PF260612 and http://www.st.com/web/en/catalog/tools/PF261699, respectively. To install these packages, launch *STM32CubeMX*, and select *Help->Updater Settings* to set *Repository Folders* where the files will be extracted to. Then select *Help->Install New Libraries*, click *From Loc...* button, and browse to the zip files downloaded.
+. Downdoad *STM32CubeF0* and its *patch* from http://www.st.com/web/en/catalog/tools/PF260612 and http://www.st.com/web/en/catalog/tools/PF261699, respectively. To install these packages, launch *STM32CubeMX*, and select *Help->Updater Settings* to set [[cuberepo]]*Repository Folders* where the files will be extracted to. Then select *Help->Install New Libraries*, click *From Loc...* button, and browse to the zip files downloaded.
 
 
 === Build toolchain and utilities for ARM
@@ -98,24 +98,24 @@ This example shows steps to generate initialization code with STM32CubeMX, creat
 
 
 === Generate initialization code
-. [Generate code] Launch STM32CubeMX, click *New Project* and select *Board Selector* tab, choose *NUCLEO-F091RC* and click *OK*. Select *Project->Settings...* from the menu. Fill *Project Location* (refered as *workspace* hereafter) and *Project Name*, and select *TrueSTUDIO* for IDE. Now switch to *Code Generator* tab and select *Copy only the necessary library files*, and then click *OK*. Then select *Project->Generate Code* from the menu and a folder (refered as *working folder* hereafter) will be generated with initialization code inside.
-. [Delete unnecessary project configuration] In the working folder, TrueSTUDIO can be deleted.
-. [Delete unnecessary header files] Delete the following files (21 in total)
+. [Generate code] Launch STM32CubeMX, click *New Project* and select *Board Selector* tab, choose *NUCLEO-F091RC* and click *OK*. Select *Project->Settings...* from the menu. Fill *Project Location* (refered as [[workspace]]`workspace` hereafter) and [[mxprojname]]*Project Name*, and select *TrueSTUDIO* for IDE. Now switch to *Code Generator* tab and select *Copy only the necessary library files*, and then click *OK*. Then select *Project->Generate Code* from the menu and a folder (refered as [[workingfolder]]`working folder` hereafter) will be generated with initialization code inside.
+. [Delete unnecessary project configuration] In the <<workingfolder,`working folder`>>, TrueSTUDIO can be deleted.
+. [Delete unnecessary header files] Delete the following files (21 in total) in the <<workingfolder,`working folder`>>
 .. In *Drivers\CMSIS\Device\ST\STM32F0xx\Include*, delete everything except *stm32f0xx.h*, *stm32f091xc.h*, and *system_stm32f0xx.h*.
 .. In *Drivers\CMSIS\Include*, delete *core_cm0plus.h*, *core_cm3.h*, *core_cm4.h*, *core_cm7.h*, *core_sc000.h*, and *core_sc300.h*.
-. [Copy BSP files] The package STM32CubeF0 provides some BSP(board support package) files which are not copied to the working folder by STM32CubeMX. Copy them manually to make coding easier -- create a folder named *BSP* in the working folder, and copy *Drivers\BSP\STM32F0xx-Nucleo* in the STM32CubeF0 repository (specified when installing <<STM32CubeF0,STM32CubeF0>>) into *BSP* in the working folder.
-. [Copy linker script] STM32CubeMX doesn't generate the linker script correctly, so we have to do it manually. In the STM32CubeF0 repository, locate *Projects\STM32F091RC-Nucleo\Templates\TrueSTUDIO\STM32F091RC-Nucleo*, and copy *STM32F091RC_FLASH.ld* into *Src* in the working folder.
-. [Fix assembly file extension] Locate the folder *Drivers\CMSIS\Device\ST\STM32F0xx\Source\Templates\gcc*, and rename *startup_stm32f091xc.s* to *startup_stm32f091xc.S* (Upper-case `S'). Otherwise the linker will give a warning ``cannot find entry symbol Reset_Handler''.
+. [Copy BSP files] The package STM32CubeF0 provides some BSP(board support package) files which are not copied to the <<workingfolder,`working folder`>> by STM32CubeMX. Copy them manually to make coding easier -- create a folder named *BSP* in the <<workingfolder,`working folder`>>, and copy *Drivers\BSP\STM32F0xx-Nucleo* in the <<cuberepo,STM32CubeF0 repository>> (specified when installing STM32CubeF0) into the new *BSP* folder.
+. [Copy linker script] STM32CubeMX doesn't generate the linker script correctly, so we have to do it manually. In the <<cuberepo,STM32CubeF0 repository>>, locate *Projects\STM32F091RC-Nucleo\Templates\TrueSTUDIO\STM32F091RC-Nucleo*, and copy *STM32F091RC_FLASH.ld* into *Src* in the <<workingfolder,`working folder`>>.
+. [Fix assembly file extension] Browse to *Drivers\CMSIS\Device\ST\STM32F0xx\Source\Templates\gcc* in the <<workingfolder,`working folder`>>, and rename *startup_stm32f091xc.s* to *startup_stm32f091xc.S* (Upper-case `S'). Otherwise the linker will give a warning ``cannot find entry symbol Reset_Handler''.
 
 
 === Create Eclipse project
-. [Set workspace] Launch Eclipse, select the forementioned *workspace* folder when asked for *Workspace*. In case another workspace is opened by default, select *File->Switch Workspace->Other...* to switch workspace.
-. [Create project] Select *File->New->C Project* from the menu, choose *Empty Project* and *Cross ARM GCC*. Uncheck *Use default location*, and fill *Location* with ``*<working folder>\EclipseProject*''. Fill *Project name* with the same *Project Name* in STM32CubeMX. Click *Next* button, uncheck *release*, and click *Next* again. In the *toolchain path*, browse to the *bin* folder of the installed <<toolchain,*GNU Tools for ARM Embedded Processor*>>, and click *Finish*.
-. [Add source folders] Select *File->New->Folder* from the menu, click *Advanced*, select *Link to alternat location (Linked Folder)*, enter *``..\Src''* (without quotes) and click *Finish*. Add *..\Inc* and *..\Drivers* in the same way.
+. [Set workspace] Launch Eclipse, select the forementioned <<workspace,`workspace`>> folder when asked for *Workspace*. In case another workspace is opened by default, select *File->Switch Workspace->Other...* to switch workspace.
+. [Create project] Select *File->New->C Project* from the menu, choose *Empty Project* and *Cross ARM GCC*. Uncheck *Use default location*, and fill *Location* with `<working folder>\EclipseProject`. Fill *Project name* with the same <<mxprojname,*Project Name*>> as in STM32CubeMX. Click *Next* button, uncheck *release*, and click *Next* again. In the *toolchain path*, browse to the *bin* folder of the installed <<toolchain,*GNU Tools for ARM Embedded Processor*>>, and click *Finish*.
+. [Add source folders] Select *File->New->Folder* from the menu, click *Advanced*, select *Link to alternat location (Linked Folder)*, enter `..\Src` and click *Finish*. Add `..\Inc` and `..\Drivers` in the same way.
 . [Add path for tools] Select *Project->Properties* from the menu, select *$$C/C++$$ Build->Environment* from the left tree, and double click *PATH* in the right pane. Append the full path of the *bin* folder of <<bintools,*GNU ARM Eclipse build tools*>> after the original value. Don't forget to add a semicolon as a separation.
 . [Set build options] Select *Project->Properties* from the menu. Select *$$C/C++$$ Build->Settings* from the left tree.
 .. Select *Target Processor* on the right pane. Choose *cortex-m0* for *ARM family*.
-.. Select *Cross ARM C Compiler->Preprocessor*. Click *Add* icon on the *Defined symbols (-D)* pane, and enter *``STM32F091xC''* (without quotes). Do it again to add *``USE_HAL_DRIVER''*.
+.. Select *Cross ARM C Compiler->Preprocessor*. Click *Add* icon on the *Defined symbols (-D)* pane, and enter `STM32F091xC`. Do it again to add `USE_HAL_DRIVER`.
 .. Select *Cross ARM C Compiler->Include*. Click *Add* icon on the *Include paths (-I)* pane, click *Workspace...*, and browse to the *Inc* folder in the project. Do the same thing for *Drivers/STM32F0xx_HAL_Driver/Inc*, *Drivers/CMSIS/Include*, *Drivers/CMSIS/Device/ST/STM32F0xx/Include*, and *Drivers/BSP/STM32F0xx-Nucleo*.
 .. Select *Cross ARM C Linker->General*. Click *Add* icon on the *Script files (-T)* pane, click *Workspace...*, and browse to *STM32F091RC_FLASH.ld* in the *Src* folder.
 .. Select *Cross ARM GNU Create Flash Image->General*. Specify *Raw binary* for *Output file format (-O)*. Although the default *Intel HEX* also works with *STM32 ST-LINK Utility*, the http://developer.mbed.org/handbook/mbed-interface[mbed interface] only supports binary files.
