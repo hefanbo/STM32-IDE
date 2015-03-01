@@ -80,7 +80,7 @@ This open source Eclipse plugin provides a $$C/C++$$ development environment for
 
 
 === Eclipse and plugins
-. Download *Eclipse IDE for $$C/C++$$ Developers* from http://www.eclipse.org/downloads/. Extract the zip file. If your computer has internet connection, you can follow "the recommended way" on http://gnuarmeclipse.livius.net/blog/plugins-install/#The_recommended_way. If you prefer off-line install, please follow the next 2 steps.
+. Download *Eclipse IDE for $$C/C++$$ Developers* from http://www.eclipse.org/downloads/. Extract the zip file. If your PC has internet connection, you can follow "the recommended way" on http://gnuarmeclipse.livius.net/blog/plugins-install/#The_recommended_way. If you prefer off-line install, please follow the next 2 steps.
 . Download *CDT 8.5.0* from https://www.eclipse.org/cdt/downloads.php. Launch Eclipse, select *Help->Install New Software...*, click *Add...* then *Archive...*, and browse to the downloaded zip file. Check the *$$C/C++$$ GDB Hardware Debugging* component and install. Remember to uncheck "Contact all update sites during install to find required software" if there is no internet connection.
 . Download *GNU ARM Eclipse Plug-in* from http://sourceforge.net/projects/gnuarmeclipse/. Similar as above, install *GNU ARM $$C/C++$$ Cross Compiler* and *GNU ARM $$C/C++$$ OpenOCD Debugging* components from the downloaded package.
 
@@ -105,7 +105,7 @@ This example shows steps to generate initialization code with STM32CubeMX, creat
 .. In *Drivers\CMSIS\Include*, delete *core_cm0plus.h*, *core_cm3.h*, *core_cm4.h*, *core_cm7.h*, *core_sc000.h*, and *core_sc300.h*.
 . [Copy BSP files] The package STM32CubeF0 provides some BSP(board support package) files which are not copied to the working folder by STM32CubeMX. Copy them manually to make coding easier -- create a folder named *BSP* in the working folder, and copy *Drivers\BSP\STM32F0xx-Nucleo* in the STM32CubeF0 repository (specified when installing <<STM32CubeF0,STM32CubeF0>>) into *BSP* in the working folder.
 . [Copy linker script] STM32CubeMX doesn't generate the linker script correctly, so we have to do it manually. In the STM32CubeF0 repository, locate *Projects\STM32F091RC-Nucleo\Templates\TrueSTUDIO\STM32F091RC-Nucleo*, and copy *STM32F091RC_FLASH.ld* into *Src* in the working folder.
-. [Fix assembly file extension] Locate the folder *Drivers\CMSIS\Device\ST\STM32F0xx\Source\Templates\gcc*, and rename *startup_stm32f091xc.s* to *startup_stm32f091xc.S* (Upper-case 'S'). Otherwise the compiler will give a warning "cannot find entry symbol Reset_Handler".
+. [Fix assembly file extension] Locate the folder *Drivers\CMSIS\Device\ST\STM32F0xx\Source\Templates\gcc*, and rename *startup_stm32f091xc.s* to *startup_stm32f091xc.S* (Upper-case 'S'). Otherwise the linker will give a warning "cannot find entry symbol Reset_Handler".
 
 
 === Create Eclipse project
