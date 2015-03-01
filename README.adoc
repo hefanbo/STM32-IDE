@@ -1,7 +1,7 @@
 = A Guide to Setup Development Environment for STM32F0 Microcontrollers
 :author: Fanbo He
 :email: hefanbo@gmail.com
-:revdate: 2015/02/27
+:revdate: 2015/03/01
 :keywords: ARM, Cortex M0, STM32, STM32F0, IDE, Eclipse
 :toc: macro
 
