@@ -3,11 +3,13 @@
 :email: hefanbo@gmail.com
 :revdate: 2015/02/27
 :keywords: ARM, Cortex M0, STM32, STM32F0, IDE, Eclipse
-:toc: preamble
+:toc: macro
 
 {author} <{email}>
 
 {revdate}
+
+toc::[]
 
 [abstract]
 == Abstract
