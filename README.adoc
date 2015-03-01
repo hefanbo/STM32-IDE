@@ -110,8 +110,8 @@ This example shows steps to generate initialization code with STM32CubeMX, creat
 
 === Create Eclipse project
 . [Set workspace] Launch Eclipse, select the forementioned <<workspace,`workspace`>> folder when asked for *Workspace*. In case another workspace is opened by default, select *File->Switch Workspace->Other...* to switch workspace.
-. [Create project] Select *File->New->C Project* from the menu, choose *Empty Project* and *Cross ARM GCC*. Uncheck *Use default location*, and fill *Location* with `<working folder>\EclipseProject`. Fill *Project name* with the same <<mxprojname,*Project Name*>> as in STM32CubeMX. Click *Next* button, uncheck *release*, and click *Next* again. In the *toolchain path*, browse to the *bin* folder of the installed <<toolchain,*GNU Tools for ARM Embedded Processor*>>, and click *Finish*.
-. [Add source folders] Select *File->New->Folder* from the menu, click *Advanced*, select *Link to alternat location (Linked Folder)*, enter `..\Src` and click *Finish*. Add `..\Inc` and `..\Drivers` in the same way.
+. [Create project] Select *File->New->C Project* from the menu, choose *Empty Project* and *Cross ARM GCC*. Uncheck *Use default location*, and fill *Location* with `<working folder>\EclipseProject` (replace `<working folder>` with the actual path). Fill *Project name* with the same <<mxprojname,*Project Name*>> as in STM32CubeMX. Click *Next* button, uncheck *release*, and click *Next* again. In the *toolchain path*, browse to the *bin* folder of the installed <<toolchain,*GNU Tools for ARM Embedded Processor*>>, and click *Finish*.
+. [Add source folders] Select *File->New->Folder* from the menu, click *Advanced*, select *Link to alternat location (Linked Folder)*, enter the text `..\Src` and click *Finish*. Add `..\Inc` and `..\Drivers` in the same way.
 . [Add path for tools] Select *Project->Properties* from the menu, select *$$C/C++$$ Build->Environment* from the left tree, and double click *PATH* in the right pane. Append the full path of the *bin* folder of <<bintools,*GNU ARM Eclipse build tools*>> after the original value. Don't forget to add a semicolon as a separation.
 . [Set build options] Select *Project->Properties* from the menu. Select *$$C/C++$$ Build->Settings* from the left tree.
 .. Select *Target Processor* on the right pane. Choose *cortex-m0* for *ARM family*.
@@ -123,7 +123,7 @@ This example shows steps to generate initialization code with STM32CubeMX, creat
 .. Add `#include "stm32f0xx_nucleo.h"` between `/* USER CODE BEGIN Includes */` and `/* USER CODE END Includes */`.
 .. Add the following code inside the `while (1)` loop
 
-[source,c,indent=4]
+[source,c,indent=8]
 ----
 if (BSP_PB_GetState(BUTTON_USER)) {
   BSP_LED_Off(LED_GREEN);
@@ -141,7 +141,7 @@ NOTE: If there are unexpected error marks in the source code, try *Project->$$C/
 .. Launch STM32 ST-LINK utility, select *Target->Program & Verify...*, browse to the bin file, and click *Start*.
 .. When the board is connected to the host PC, a USB drive will appear. Just copy the bin file to the drive, and the on-board http://developer.mbed.org/handbook/mbed-interface[mbed interface] will flash it automatically.
 . [Debug] Follow these steps to debug with Eclipse
-.. [Set OpenOCD path] Select *Window->Preferences* from the menu, and then select *Run/Debug->String Substitution* from the left tree. Set the absolute path (e.g., `...\OpenOCD\bin-x64`) and executable file name (e.g., `openocd-x64-0.9.0-dev-150204220259`) in the right pane.
+.. [Set OpenOCD path] Select *Window->Preferences* from the menu, and then select *Run/Debug->String Substitution* from the left tree. Set the absolute path (e.g., `<somewhere>\OpenOCD\bin-x64`) and executable file name (e.g., `openocd-x64-0.9.0-dev-150204220259`) in the right pane.
 .. [Create debug configuration] Select *Run->Debug Configurations...* from the menu, and double click *GDB OpenOCD Debugging* in the left tree. In the right pane, select *Debugger* tab, and fill *-f boards/st_nucleo_f0.cfg* in *Config options*.
 .. [Launch debug] Connect the board with a USB cable, and click *Debug* button. Switch to ``Debug'' perspective if asked. Now you can debug the program by setting breakpoints, executing program step by step, watching variables, etc.
 
