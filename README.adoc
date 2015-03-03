@@ -46,7 +46,7 @@ STM32CubeF0::
 This package provides useful code, libraries, and examples for users to write applications for STM32F0.
 
 CMSIS::
-The ARM Cortex Microcontroller Software Interface Standard (CMSIS) contains useful code and libraries for Cortex-M. Although STM32CubeF0 includes a version of CMSIS, it lacks some libraries.
+The ARM Cortex Microcontroller Software Interface Standard (CMSIS) contains useful code and libraries for Cortex-M. Although STM32CubeF0 contains a copy of CMSIS, it lacks some libraries.
 
 GNU Tools for ARM Embedded Processor::
 This is an open source toolchain to build programs for ARM processors.
