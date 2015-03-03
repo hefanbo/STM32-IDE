@@ -45,6 +45,9 @@ This handy tool lets users configure microcontrollers by GUI, and generates appr
 STM32CubeF0::
 This package provides useful code, libraries, and examples for users to write applications for STM32F0.
 
+CMSIS::
+The ARM Cortex Microcontroller Software Interface Standard (CMSIS) contains useful code and libraries for Cortex-M. Although STM32CubeF0 includes a version of CMSIS, it lacks some libraries.
+
 GNU Tools for ARM Embedded Processor::
 This is an open source toolchain to build programs for ARM processors.
 
@@ -77,6 +80,7 @@ This open source Eclipse plugin provides a $$C/C++$$ development environment for
 . [[toolchain]]Download *GNU Tools for ARM Embedded Processor* from https://launchpad.net/gcc-arm-embedded/+download. Unpack and run the installer.
 . [[bintools]]Download *GNU ARM Eclipse build tools* from http://sourceforge.net/projects/gnuarmeclipse/files/Build%20Tools/. Unpack and run the installer.
 . Download *OpenOCD 0.9.0-dev* from http://www.freddiechopin.info/download/category/10-openocd-dev/. Extract the downloaded zip file. The OpenOCD project page is http://sourceforge.net/projects/openocd/. However, the latest release 0.8.0 does not work with STM32F091RCT6, and therefore users have to compile the latest source code available at http://sourceforge.net/p/openocd/code/ci/master/tree/. Fortunately, this nice guy http://www.freddiechopin.info/en/about[Freddie Chopin] has done the compilation and provides downloads as above.
+. [[cmsis]]Download *CMSIS* from http://www.arm.com/products/processors/cortex-m/cortex-microcontroller-software-interface-standard.php.
 
 
 === Eclipse and plugins
@@ -116,8 +120,11 @@ This example shows steps to generate initialization code with STM32CubeMX, creat
 . [Set build options] Select *Project->Properties* from the menu. Select *$$C/C++$$ Build->Settings* from the left tree.
 .. Select *Target Processor* on the right pane. Choose *cortex-m0* for *ARM family*.
 .. Select *Cross ARM C Compiler->Preprocessor*. Click *Add* icon on the *Defined symbols (-D)* pane, and enter `STM32F091xC`. Do it again to add `USE_HAL_DRIVER`.
-.. Select *Cross ARM C Compiler->Include*. Click *Add* icon on the *Include paths (-I)* pane, click *Workspace...*, and browse to the *Inc* folder in the project. Do the same thing for *Drivers/STM32F0xx_HAL_Driver/Inc*, *Drivers/CMSIS/Include*, *Drivers/CMSIS/Device/ST/STM32F0xx/Include*, and *Drivers/BSP/STM32F0xx-Nucleo*.
+.. Select *Cross ARM C Compiler->Include*. Click *Add* icon on the *Include paths (-I)* pane, click *Workspace...*, and browse to the *Inc* folder in the project. Do the same thing for *Drivers\STM32F0xx_HAL_Driver\Inc*, *Drivers\CMSIS\Include*, *Drivers\CMSIS\Device\ST\STM32F0xx\Include*, and *Drivers\BSP\STM32F0xx-Nucleo*.
 .. Select *Cross ARM C Linker->General*. Click *Add* icon on the *Script files (-T)* pane, click *Workspace...*, and browse to *STM32F091RC_FLASH.ld* in the *Src* folder.
+.. If CMSIS DSP Library is to be used in the project, the math library must be added. However, the CMSIS shipped with STM32CubeF0 does not contain libraries to use with <<toolchain,*GNU Tools for ARM Embedded Processor*>>. To fix this:
+... Extract *CMSIS\Lib\GCC\libarm_cortexM0l_math.a* from the <<cmsis,downloaded CMSIS zip file>> to `<working folder>\CMSIS\Lib\GCC` (create corresponding folders if necessary).
+... Select *Cross ARM C Linker->Libraries*. Click *Add* icon on the *Libraries (-l)* pane, and enter the text `arm_cortexM0l_math`. Click *Add* icon on the *Library search path (-L)* pane, click *Workspace...*, and browse to *Drivers\CMSIS\Lib\GCC* in the project.
 .. Select *Cross ARM GNU Create Flash Image->General*. Specify *Raw binary* for *Output file format (-O)*. Although the default *Intel HEX* also works with *STM32 ST-LINK Utility*, the http://developer.mbed.org/handbook/mbed-interface[mbed interface] only supports binary files.
 . [Add custom code] Open *main.c* in *Src*. The function of the program is simple -- light the green LED LD2 when the blue button B1 is pressed.
 .. Add `#include "stm32f0xx_nucleo.h"` between `/* USER CODE BEGIN Includes */` and `/* USER CODE END Includes */`.
