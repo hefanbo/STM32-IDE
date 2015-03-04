@@ -29,7 +29,7 @@ Java Runtime Environment 8::
 Java Runtime Environment (JRE, version≥7) is required by STM32CubeMX and Eclipse. Download links can be found at https://www.java.com/en/download/manual.jsp.
 
 Hardware of host PC::
-CPU: 3.4 GHz / 4 Cores. RAM: 8 GB. Disk space used by all software packages is nearly 1 GB.
+CPU: 3.4 GHz / 4 Cores. RAM: 8 GB. Disk space used by all software packages is about 1 GB.
 
 Development board::
 The development board in this article is http://www.st.com/web/en/catalog/tools/PF260944[NUCLEO-F091RC] which features the microcontroller http://www.st.com/web/catalog/mmc/FM141/SC1169/SS1574/LN7/PF260450[STM32F091RCT6] and includes an on-board http://www.st.com/web/catalog/tools/FM146/CL1984/SC724/SS1677/PF251168[ST-LINK/V2] programmer.
