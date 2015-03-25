@@ -2,7 +2,7 @@
 :experimental:
 :author: Fanbo He
 :email: hefanbo@gmail.com
-:revdate: 2015/03/01
+:revdate: 2015/03/25
 :keywords: ARM, Cortex M0, STM32, STM32F0, IDE, Eclipse
 :toc: macro
 
@@ -77,7 +77,7 @@ This open source Eclipse plugin provides a $$C/C++$$ development environment for
 . Downdoad *STM32CubeF0* and its *patch* from http://www.st.com/web/en/catalog/tools/PF260612 and http://www.st.com/web/en/catalog/tools/PF261699, respectively. To install these packages, launch *STM32CubeMX*, and select *menu:Help[Updater Settings]* to set [[cuberepo]]*Repository Folders* where the files will be extracted to. Then select *menu:Help[Install New Libraries]*, click btn:[From Loc...] button, and browse to the zip files downloaded.
 
 
-=== Build toolchain and utilities for ARM
+=== Build-toolchain and utilities for ARM
 . [[toolchain]]Download *GNU Tools for ARM Embedded Processor* from https://launchpad.net/gcc-arm-embedded/+download. Unpack and run the installer.
 . [[bintools]]Download *GNU ARM Eclipse build tools* from http://sourceforge.net/projects/gnuarmeclipse/files/Build%20Tools/. Unpack and run the installer.
 . Download *OpenOCD 0.9.0-dev* from http://www.freddiechopin.info/download/category/10-openocd-dev/. Extract the downloaded zip file. The OpenOCD project page is http://sourceforge.net/projects/openocd/. However, the latest release 0.8.0 does not work with STM32F091RCT6, and therefore users have to compile the latest source code available at http://sourceforge.net/p/openocd/code/ci/master/tree/. Fortunately, this nice guy http://www.freddiechopin.info/en/about[Freddie Chopin] has done the compilation and provides downloads as above.
