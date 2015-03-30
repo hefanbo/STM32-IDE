@@ -152,7 +152,7 @@ NOTE: If there are unexpected error marks when displaying source code in Eclipse
 .. When the board is connected to the host PC, a USB drive will appear. Just copy the bin file to the drive, and the on-board http://developer.mbed.org/handbook/mbed-interface[mbed interface] will flash it automatically.
 . [Debug] Follow these steps to debug with Eclipse
 .. [Set OpenOCD path] Select *menu:Window[Preferences]* from the menu, and then select *menu:Run/Debug[String Substitution]* from the left tree. Set the absolute path (e.g., `<somewhere>\OpenOCD\bin-x64`) and executable file name (e.g., `openocd-x64-0.9.0-dev-150204220259`) in the right pane.
-.. [Create debug configuration] Select *menu:Run[Debug Configurations...]* from the menu, and double click *GDB OpenOCD Debugging* in the left tree. In the right pane, select *Debugger* tab, and fill *-f boards/st_nucleo_f0.cfg* in *Config options*.
+.. [Create debug configuration] Select *menu:Run[Debug Configurations...]* from the menu, and double click *GDB OpenOCD Debugging* in the left tree. In the right pane, select *Debugger* tab, and fill *-f board/st_nucleo_f0.cfg* in *Config options*.
 .. [Launch debug] Connect the board with a USB cable, and click btn:[Debug] button. Switch to ``Debug'' perspective if asked. Now you can debug the program by setting breakpoints, executing program step by step, watching variables, etc.
 
 
