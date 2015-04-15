@@ -86,7 +86,7 @@ This open source Eclipse plugin provides a $$C/C++$$ development environment for
 
 === Eclipse and plugins
 . Download *Eclipse IDE for $$C/C++$$ Developers* from http://www.eclipse.org/downloads/. Extract the zip file. If your PC has internet connection, you can follow ``the recommended way'' on http://gnuarmeclipse.livius.net/blog/plugins-install/#The_recommended_way. If you prefer off-line install, please follow the next 2 steps.
-. Download *CDT 8.5.0* from https://www.eclipse.org/cdt/downloads.php. Launch Eclipse, select *menu:Help[Install New Software...]*, click btn:[Add...] then btn:[Archive...], and browse to the downloaded zip file. Check the *$$C/C++$$ GDB Hardware Debugging* component and install. Remember to uncheck ``Contact all update sites during install to find required software'' if there is no internet connection.
+. Download *CDT* from https://www.eclipse.org/cdt/downloads.php. Launch Eclipse, select *menu:Help[Install New Software...]*, click btn:[Add...] then btn:[Archive...], and browse to the downloaded zip file. Check the *$$C/C++$$ GDB Hardware Debugging* component and install. Remember to uncheck ``Contact all update sites during install to find required software'' if there is no internet connection.
 . Download *GNU ARM Eclipse Plug-in* from http://sourceforge.net/projects/gnuarmeclipse/. Similar as above, install *GNU ARM $$C/C++$$ Cross Compiler* and *GNU ARM $$C/C++$$ OpenOCD Debugging* components from the downloaded package.
 
 
