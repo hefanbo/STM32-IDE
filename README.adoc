@@ -2,7 +2,7 @@
 :experimental:
 :author: Fanbo He
 :email: hefanbo@gmail.com
-:revdate: 2015/03/25
+:revdate: 2015/04/15
 :keywords: ARM, Cortex M0, STM32, STM32F0, IDE, Eclipse
 :toc: macro
 
@@ -47,7 +47,7 @@ STM32CubeF0::
 This package provides useful code, libraries, and examples for users to write applications for STM32F0.
 
 CMSIS::
-The ARM Cortex Microcontroller Software Interface Standard (CMSIS) contains useful code and libraries for Cortex-M. Although STM32CubeF0 contains a copy of CMSIS, it lacks some libraries.
+The ARM Cortex Microcontroller Software Interface Standard (CMSIS) contains useful code and libraries for Cortex-M. Although STM32CubeF0 contains a copy of CMSIS, it lacks some libraries. Nevertheless, if you are okay to compile libraries from source yourself, you can skip downloading CMSIS.
 
 GNU Tools for ARM Embedded Processor::
 This is an open source toolchain to build programs for ARM processors.
@@ -103,13 +103,13 @@ This example shows steps to generate initialization code with STM32CubeMX, creat
 
 
 === Generate initialization code
-. [Generate code] Launch STM32CubeMX, click *New Project* and select *Board Selector* tab, choose *NUCLEO-F091RC* and click btn:[OK]. Select *menu:Project[Settings...]* from the menu. Fill *Project Location* (refered as [[workspace]]`workspace` hereafter) and [[mxprojname]]*Project Name*, and select *TrueSTUDIO* for IDE. Now switch to *Code Generator* tab and select *Copy only the necessary library files*, and then click btn:[OK]. Then select *menu:Project[Generate Code]* from the menu and a folder (refered as [[workingfolder]]`working folder` hereafter) will be generated with initialization code inside.
+. [Generate code] Launch STM32CubeMX, click *New Project* and select *Board Selector* tab, choose *NUCLEO-F091RC* and click btn:[OK]. Select *menu:Project[Settings...]* from the menu. Fill *Project Location* (refered as [[workspace]]`workspace` hereafter) and [[mxprojname]]*Project Name*, and select *TrueSTUDIO* for IDE (if you are using STM32CubeMX version 4.7+, you can also select *SW4STM32*). Now switch to *Code Generator* tab and select *Copy only the necessary library files*, and then click btn:[OK]. Then select *menu:Project[Generate Code]* from the menu and a folder (refered as [[workingfolder]]`working folder` hereafter) will be generated with initialization code inside.
 . [Delete unnecessary project configuration] In the <<workingfolder,`working folder`>>, TrueSTUDIO can be deleted.
 . [Delete unnecessary header files] Delete the following files (21 in total) in the <<workingfolder,`working folder`>>
 .. In *Drivers\CMSIS\Device\ST\STM32F0xx\Include*, delete everything except *stm32f0xx.h*, *stm32f091xc.h*, and *system_stm32f0xx.h*.
 .. In *Drivers\CMSIS\Include*, delete *core_cm0plus.h*, *core_cm3.h*, *core_cm4.h*, *core_cm7.h*, *core_sc000.h*, and *core_sc300.h*.
 . [Copy BSP files] The package STM32CubeF0 provides some BSP(board support package) files which are not copied to the <<workingfolder,`working folder`>> by STM32CubeMX. Copy them manually to make coding easier -- create a folder named *BSP* in `<working foler>\Drivers`, and copy *Drivers\BSP\STM32F0xx-Nucleo* in the <<cuberepo,STM32CubeF0 repository>> (specified when installing STM32CubeF0) into the new *BSP* folder.
-. [Copy linker script] STM32CubeMX doesn't generate the linker script correctly, so we have to do it manually. In the <<cuberepo,STM32CubeF0 repository>>, locate *Projects\STM32F091RC-Nucleo\Templates\TrueSTUDIO\STM32F091RC-Nucleo*, and copy *STM32F091RC_FLASH.ld* into *Src* in the <<workingfolder,`working folder`>>.
+. [Copy linker script] STM32CubeMX doesn't generate the linker script correctly for TrueSTUDIO, so we have to do it manually. In the <<cuberepo,STM32CubeF0 repository>>, locate *Projects\STM32F091RC-Nucleo\Templates\TrueSTUDIO\STM32F091RC-Nucleo*, and copy *STM32F091RC_FLASH.ld* into *Src* in the <<workingfolder,`working folder`>>. If you selected SW4STM32, the correct file can be found in *<working folder>\SW4STM32\<Project Name> Configuration*, and after copying this file, the folder *SW4STM32* can be deleted.
 . [Fix assembly file extension] Browse to *Drivers\CMSIS\Device\ST\STM32F0xx\Source\Templates\gcc* in the <<workingfolder,`working folder`>>, and rename *startup_stm32f091xc.s* to *startup_stm32f091xc.S* (Upper-case `S'). Otherwise the linker will give a warning ``cannot find entry symbol Reset_Handler''.
 
 
