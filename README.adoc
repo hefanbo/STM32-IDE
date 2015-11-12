@@ -21,7 +21,7 @@ This article describes how to setup a development environment for http://www.st.
 :numbered:
 == Overview
 === System and hardware environment
-The system and hardware environment used in this article is described as follows. It is *not* system requirements. For detailed system requirements, please refer to documents of software packages.
+The system and hardware environment used in this article is described as follows. They are *not* system requirements. For detailed system requirements, please refer to documents of software packages.
 
 Windows 7 (64-bit)::
 The host operating system must be Windows because STM32CubeMX runs only on Windows. Nevertheless, if you don't plan to use STM32CubeMX, other operating systems are feasible.
